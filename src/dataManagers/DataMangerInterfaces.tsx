@@ -1,36 +1,10 @@
-////////////////////////
+////////////////////////////////////////////////////////
 /*Main Interfaces*/
-////////////////////////
+////////////////////////////////////////////////////////
 
 /**
- * Interface that denotes what the Advanced Search Functionality can process.
+ * Interface that denotes the main information about a Card
  */
-export interface AdvancedSearchTerms {
-  mainSearch:     string
-  coloursInclude: string[] //Valid Inputs: {W, U, B, R, G}
-  coloursExclude: string[] //Valid Inputs: {W, U, B, R, G}
-  cardTypes:      string[]
-  cardText:       string[]
-  //Add More as Advanced Search becomes more fully fleshed out
-}
+export interface CardInformation {
 
-////////////////////////
-/*Interface Functions*/
-////////////////////////
-
-/**
- * Converts an Interface to a String with new line formatting.
- * @param currentInterface - the AdvancedSearchTerms interface to convert into a string
- */
-export function advancedSearchTermsToString(currentInterface: AdvancedSearchTerms) : string {
-  
-  let returnString = "";
-
-  returnString += "Main Search Term: " + currentInterface.mainSearch + "\n";
-  returnString += "Colours Included: " + currentInterface.coloursInclude.map((s : string) => {return s.toUpperCase()}) + "\n";
-  returnString += "Colours Excluded: " + currentInterface.coloursExclude.map((s : string) => {return s.toUpperCase()}) + "\n";
-  returnString += "Card Types: " + currentInterface.cardTypes.map((s : string) => {return s.toUpperCase()}) + "\n";
-  returnString += "Card Text: " + currentInterface.cardText.map((s : string) => {return s.toUpperCase()}) + "\n";
-
-  return returnString;
 }
