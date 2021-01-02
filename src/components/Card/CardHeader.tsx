@@ -8,6 +8,7 @@ import { IonCardHeader, IonCardSubtitle, IonCardTitle } from '@ionic/react';
 interface CardHeader_Props {
   title     : string,
   subtitle  : string,
+  inverted  : boolean,
 }
 
 ////////////////////////////////////////////////////////
@@ -22,6 +23,7 @@ const CardHeader: React.FC<CardHeader_Props> = (props : CardHeader_Props) => {
 
   const title : string = props.title;
   const subtitle : string = props.subtitle;
+  const isInverted : boolean = props.inverted;
 
   //////////////////////////////
   /*Return*/
@@ -29,8 +31,17 @@ const CardHeader: React.FC<CardHeader_Props> = (props : CardHeader_Props) => {
 
   return (
     <IonCardHeader>
-      <IonCardSubtitle>{title}</IonCardSubtitle>
-      <IonCardTitle>{subtitle}</IonCardTitle>
+      {
+        (isInverted)
+        ? <div>
+          <IonCardSubtitle>{title}</IonCardSubtitle>
+          <IonCardTitle>{subtitle}</IonCardTitle>
+        </div>
+        : <div>
+          <IonCardTitle>{subtitle}</IonCardTitle>
+          <IonCardSubtitle>{title}</IonCardSubtitle>
+        </div>
+      }
     </IonCardHeader>
   )
 
