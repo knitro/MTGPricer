@@ -5,6 +5,7 @@
 import { Plugins } from '@capacitor/core';
 import { CardInformation } from '../dataManagers/DataMangerInterfaces';
 import { CardItem } from '../pages/Pricer/Pricer';
+import uuid from 'uuid';
 
 ////////////////////////////////////////////////////////
 /*Local Initialisation*/
@@ -28,8 +29,9 @@ export async function addPricerCard(itemToSave : CardInformation) : Promise<bool
 
   let returnValue = getPricerCards().then( (items : CardItem[]) => {
     let newItem : CardItem = {
-      info : itemToSave,
-      isChecked : false
+      info      : itemToSave,
+      isChecked : false,
+      uid       : uuid.v4(),
     };
     items.push(newItem);
     return items;

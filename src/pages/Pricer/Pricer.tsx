@@ -10,6 +10,7 @@ import PricerDisplay from './PricerDisplay';
 export interface CardItem {
   info      : CardInformation,
   isChecked : boolean
+  uid       : string
 }
 
 export interface PricerInfo {
