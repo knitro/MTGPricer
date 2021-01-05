@@ -1,7 +1,8 @@
-import { IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonNote, IonText } from '@ionic/react';
+import { IonCard, IonCardContent, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonNote, IonText } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
+import CardHeader from '../../../components/Card/CardHeader';
 import { CardInformation } from '../../../dataManagers/DataMangerInterfaces';
-import { CardItem } from '../Pricer';
+import { CardItem } from '../CardViewer';
 
 ////////////////////////////////////////////////////////
 /*Props*/
@@ -16,7 +17,7 @@ interface Current_Props {
 /*Component*/
 ////////////////////////////////////////////////////////
 
-const SingleItem = (props : Current_Props) => {
+const SingleCard = (props : Current_Props) => {
 
   ////////////////////////
   /*Variables*/
@@ -77,24 +78,13 @@ const SingleItem = (props : Current_Props) => {
   ////////////////////////
 
   return (
-    
-    <div>
-      <IonItemSliding>
-
-        <IonItem>
-          <IonLabel>{name}</IonLabel>
-          <IonText slot="" color="primary">{set}</IonText>
-          <IonText slot="end">{price}</IonText>
-          
-        </IonItem>
-
-        <IonItemOptions side="end">
-          <IonItemOption onClick={() => removeCardUpdater(info)}>{"Remove"}</IonItemOption>
-        </IonItemOptions>
-        
-      </IonItemSliding>
-    </div>
+    <IonCard>
+      <CardHeader title={name} subtitle={set} inverted={false}/>
+      <IonCardContent>
+        <img src={imageURL} />
+      </IonCardContent>
+    </IonCard>
   );
 }
 
-export default SingleItem;
+export default SingleCard;

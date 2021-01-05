@@ -3,12 +3,13 @@ import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCon
 import Header from '../../components/Header/Header';
 import uuid from 'uuid';
 import ShowMoreLess from '../../components/ShowMoreLess/ShowMoreLess';
-import { CardItem, PricerInfo } from './Pricer';
-import SingleItem from './SupportingComponents/SingleItem';
+import { CardItem, PricerInfo } from './CardViewer';
+import SingleCard from './SupportingComponents/SingleCard';
 import { CardInformation } from '../../dataManagers/DataMangerInterfaces';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import CardHeader from '../../components/Card/CardHeader';
 import { remove } from 'ionicons/icons';
+import BulkBar from '../../components/BulkBar/BulkBar';
 
 ////////////////////////////////////////////////////////
 /*Enums*/
@@ -35,7 +36,7 @@ interface Current_Props {
 /*Component*/
 ////////////////////////////////////////////////////////
 
-const PricerDisplay = (props : Current_Props) => {
+const CardViewerDisplay = (props : Current_Props) => {
 
   ////////////////////////
   /*Variables*/
@@ -73,13 +74,13 @@ const PricerDisplay = (props : Current_Props) => {
     <IonPage>
       
       {/* Displays the Header */}
-      <Header headerLabel="MTG Pricer"/>
+      <Header headerLabel="Card Viewer"/>
       
       {/* Displays the History Logs */}
       <IonContent>
 
         {/*Create SearchBar*/}
-        <SearchBar searchString="" placeholderText="" cardAdderUpdater={addCard}/>
+        <BulkBar searchString="" placeholderText="" cardAdderUpdater={addCard}/>
         <IonList>
 
           {/*Filter Card*/}
@@ -128,7 +129,7 @@ const PricerDisplay = (props : Current_Props) => {
           <IonList>
             {
               cards.map((currentCard : CardItem) =>
-                <SingleItem info={currentCard} key={uuid.v4()} removeCardUpdater={removeCard}/>
+                <SingleCard info={currentCard} key={uuid.v4()} removeCardUpdater={removeCard}/>
               )
             }
           </IonList>
@@ -141,4 +142,4 @@ const PricerDisplay = (props : Current_Props) => {
   );
 };
 
-export default PricerDisplay;
+export default CardViewerDisplay;

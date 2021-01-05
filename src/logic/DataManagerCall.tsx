@@ -2,12 +2,14 @@
 /*Imports*/
 ////////////////////////////////
 
+import { updateFunctionDeclaration } from "typescript";
 import DataManager from "../dataManagers/DataManager";
 import { CardInformation, emptyCardInformation } from "../dataManagers/DataMangerInterfaces";
 import ScryFall from "../dataManagers/ScryFall/ScryFall";
 import { CardItem } from "../pages/Pricer/Pricer";
 import { addPricerCard } from "../states/PricerState";
 import { emptySearch, SearchState } from "../states/SearchState";
+import uuid from 'uuid';
 
 ////////////////////////////////
 /*DataManager Fields*/
@@ -56,7 +58,8 @@ export function searchCall(cardNameSearchTerm : string,
       //Create CardItem and Add to Hook
       let newCardItem : CardItem = {
         info : newCardInformation,
-        isChecked : false
+        isChecked : false,
+        uid : uuid.v4(),
       }
       cardAdderUpdater(newCardItem);
 

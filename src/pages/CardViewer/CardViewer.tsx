@@ -1,7 +1,7 @@
 import React from 'react';
 import { CardInformation } from '../../dataManagers/DataMangerInterfaces';
 import { getPricerCards, getPricerNotes, savePricerCards } from '../../states/PricerState';
-import PricerDisplay from './PricerDisplay';
+import CardViewerDisplay from './CardViewerDisplay';
 
 ////////////////////////////////////////////////////////
 /*Interfaces*/
@@ -32,7 +32,7 @@ export function getEmptyPricerInfo() : PricerInfo {
 /**
  * Sorts with Async and other constantly updating components for the Pricer Screen.
  */
-class Pricer extends React.Component<{}, PricerInfo> {
+class CardViewer extends React.Component<{}, PricerInfo> {
 
   ////////////////////////
   /*Constructor*/
@@ -95,7 +95,7 @@ class Pricer extends React.Component<{}, PricerInfo> {
 
     /*Display*/ 
     return (
-      <PricerDisplay 
+      <CardViewerDisplay 
         state={this.state} 
         addCard={this.addCard} 
         removeCard={this.removeCard}
@@ -106,4 +106,4 @@ class Pricer extends React.Component<{}, PricerInfo> {
  
 };
 
-export default Pricer;
+export default CardViewer;

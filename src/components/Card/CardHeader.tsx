@@ -34,12 +34,12 @@ const CardHeader: React.FC<CardHeader_Props> = (props : CardHeader_Props) => {
       {
         (isInverted)
         ? <div>
-          <IonCardSubtitle>{title}</IonCardSubtitle>
-          <IonCardTitle>{subtitle}</IonCardTitle>
+          <IonCardSubtitle>{subtitle}</IonCardSubtitle>
+          <IonCardTitle>{title}</IonCardTitle>
         </div>
         : <div>
-          <IonCardTitle>{subtitle}</IonCardTitle>
-          <IonCardSubtitle>{title}</IonCardSubtitle>
+          <IonCardTitle>{title}</IonCardTitle>
+          <IonCardSubtitle>{subtitle}</IonCardSubtitle>
         </div>
       }
     </IonCardHeader>

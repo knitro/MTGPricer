@@ -18,6 +18,8 @@ import Pricer from '../pages/Pricer/Pricer';
 ////////////////////////////////////////////////////////////////////////////////////
 
 import History from '../logic/History';
+import CardViewer from '../pages/CardViewer/CardViewer';
+import SideBar from '../components/SideBar/SideBar';
 
 ////////////////////////////////////////////////////////////////////////////////////
 /* Main */
@@ -38,12 +40,14 @@ const Main: React.FC = () => {
 
         <IonSplitPane contentId="main"> {/* Adds/Allows the SideBar Functionality */}
 
+          <SideBar/>  {/* The Actual Sidebar */}
           <IonPage id="main"> {/* ID reference allowing for Sidebar Functionality */}
 
             <IonRouterOutlet>
 
               {/*Default Pages*/}
               <Route path="/pricer"       component={Pricer}      exact={true} />
+              <Route path="/card-viewer"  component={CardViewer}      exact={true} />
 
               {/*Blank Route*/}
               <Route path="/" render={() => <Redirect to="/pricer" />}          exact={true} />
