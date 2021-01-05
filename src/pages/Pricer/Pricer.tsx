@@ -1,6 +1,6 @@
 import React from 'react';
 import { CardInformation } from '../../dataManagers/DataMangerInterfaces';
-import { getPricerCards, getPricerNotes } from '../../states/PricerState';
+import { getPricerCards, getPricerNotes, savePricerCards } from '../../states/PricerState';
 import PricerDisplay from './PricerDisplay';
 
 ////////////////////////////////////////////////////////
@@ -56,15 +56,26 @@ class Pricer extends React.Component<{}, PricerInfo> {
     this.setState({notes: await getPricerNotes()});
   }
 
+  /**
+   * Adds a Card to the State.
+   * It is important to note that the Database adds the card to local storage.
+   * @param cardToAdd 
+   */
   addCard = (cardToAdd : CardItem) => {
     let newArray : CardItem[] = this.state.cards;
     newArray.push(cardToAdd);
     this.setState({cards : newArray});
   }
 
+  /**
+   * Removes a Card from the State.
+   * This function must remove the card from the database.
+   * @param cardToRemove 
+   */
   removeCard = (cardToRemove : CardItem) => {
-    let newArray : CardItem[] = this.state.cards.filter(currentCard => currentCard === cardToRemove);
+    let newArray : CardItem[] = this.state.cards.filter(currentCard => currentCard !== cardToRemove);
     this.setState({cards: newArray});
+    savePricerCards(this.state.cards);
   }
 
   ////////////////////////
