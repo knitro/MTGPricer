@@ -7,6 +7,7 @@ import { CardItem, PricerInfo } from './Pricer';
 import SingleItem from './SupportingComponents/SingleItem';
 import { CardInformation } from '../../dataManagers/DataMangerInterfaces';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import CardHeader from '../../components/Card/CardHeader';
 
 ////////////////////////////////////////////////////////
 /*Enums*/
