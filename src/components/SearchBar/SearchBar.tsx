@@ -1,55 +1,103 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { IonSearchbar, IonButton, IonLoading, IonAlert } from "@ionic/react";
 import './SearchBar.css';
-import SearchBarCards from './SearchBarCards/SearchBarCards';
-import { IonText } from '@ionic/react';
+import { emptySearch, SearchState } from '../../states/SearchState';
+import { searchCall } from '../../logic/DataManagerCall';
+import { CardItem } from '../../pages/Pricer/Pricer';
 
-export enum SearchCategory {
-  Cards,
-  Rules,
-  SetEV
+////////////////////////////////////////////////////////
+/*Props*/
+////////////////////////////////////////////////////////
+
+interface Current_Props {
+  searchString    : string,
+  placeholderText : string,
+  cardAdderUpdater: (cardToAdd : CardItem) => void,
 }
 
-interface SearchBarProps {
-  searchString: string;
-  placeholderText: string;
-  category : SearchCategory;
-}
+////////////////////////////////////////////////////////
+/*Component*/
+////////////////////////////////////////////////////////
 
-/**
- * Creates the SearchBar.
- * @param props - Considers the parameters to set the searchbar.
- */
-const SearchBar = (props : SearchBarProps) => {
+const SearchBarCards = (props : Current_Props) => {
 
-  /*Variable Initialisation*/
-  let category : SearchCategory = props.category;
+  ////////////////////////
+  /*Variables*/
+  ////////////////////////
 
+  //Props Variables
+  let placeholderText : string = props.placeholderText;
+  let cardAdderUpdater : (cardToAdd : CardItem) => void = props.cardAdderUpdater;
+
+  //Other Initialisations
+  let currentSearch: SearchState = Object.assign([], emptySearch);
+
+  ////////////////////////
+  /*Hooks*/
+  ////////////////////////
+
+  const [showAlert1, setShowAlert1] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
+  const [searchString, setSearchString] = useState(props.searchString);
+
+  ////////////////////////
   /*Rendering*/
-  if (category === SearchCategory.Cards) {
-    return (
-      <SearchBarCards searchString="" placeholderText="Search for Magic Cards" />
-    );
-  } else if (category === SearchCategory.Rules) {
-    return (
-      <div>
-        <IonText>{"This has not been implemented yet"}</IonText>
-      </div>
-    );
-  } else if (category === SearchCategory.SetEV) {
-    return (
-      <div>
-        <IonText>{"This has not been implemented yet"}</IonText>
-      </div>
-    );
-  } else {
-    console.log("ERROR: This is not an implemented SearchBar category");
-    return (
-      <div>
-        <IonText>{"The SearchBar type is not recognised"}</IonText>
-      </div>
-    );
-  }
-  
+  ////////////////////////
+
+  return (
+    <div>
+
+      <IonSearchbar 
+        autocomplete="on" 
+        inputmode="text" 
+        type="search" 
+        placeholder={placeholderText}
+        value={searchString} 
+        onIonChange={
+          e => {
+            setSearchString(e.detail.value!);
+            currentSearch.cardName = searchString;
+          } 
+        }
+        animated={true}
+      />
+      
+      <IonButton 
+        color="primary"
+        expand="block"
+        fill="solid"
+        size="large"
+        text-align="center"
+        class="searchButton"
+        onClick={() => {
+          currentSearch.cardName = searchString;
+          setShowLoading(true)
+          searchCall(searchString, setShowLoading, setShowAlert1, cardAdderUpdater);
+        }}
+      >
+        {"Search"}
+      </IonButton>
+      
+      <IonLoading
+        cssClass='ionLoading'
+        isOpen={showLoading}
+        onDidDismiss={() => setShowLoading(false)}
+        message={'Searching for "' + searchString + '"'}
+        duration={10000}
+      />
+
+      <IonAlert
+        isOpen={showAlert1}
+        onDidDismiss={() => setShowAlert1(false)}
+        cssClass='failed'
+        header={'Error'}
+        subHeader={'Failed to Get Card Information'}
+        message={"Please make sure to check the spelling of the search term"}
+        buttons={['OK']}
+      />
+
+    </div>
+  );
 }
 
-export default SearchBar;
+export default SearchBarCards;

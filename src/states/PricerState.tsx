@@ -3,6 +3,7 @@
 ////////////////////////////////////////////////////////
 
 import { Plugins } from '@capacitor/core';
+import { CardInformation } from '../dataManagers/DataMangerInterfaces';
 import { CardItem } from '../pages/Pricer/Pricer';
 
 ////////////////////////////////////////////////////////
@@ -18,6 +19,31 @@ const keyNote : string = "pricer_notes"
 ////////////////////////////////////////////////////////
 /*Capacitor Storage for Cards*/
 ////////////////////////////////////////////////////////
+
+/**
+ * Saves an Array of CardItems to Storage for the Pricer Page.
+ * @param itemToSave - the array to save in storage
+ */
+export async function addPricerCard(itemToSave : CardInformation) : Promise<boolean> {
+
+  let returnValue = getPricerCards().then( (items : CardItem[]) => {
+    let newItem : CardItem = {
+      info : itemToSave,
+      isChecked : false
+    };
+    items.push(newItem);
+    return items;
+  }).then( async (items : CardItem[]) => {
+    console.log(items);
+    return savePricerCards(items);
+  });
+
+  if (returnValue) {
+    console.log("Card Addition Successful");
+  }
+
+  return returnValue;
+}
 
 /**
  * Saves an Array of CardItems to Storage for the Pricer Page.

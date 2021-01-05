@@ -2,7 +2,6 @@ import { Component } from 'react';
 
 import axios from 'axios';
 import { SearchState } from '../states/SearchState';
-import { AdvancedSearchTerms } from './DataMangerInterfaces';
 
 export enum DatabaseLoad {
   NOT_LOADED,
@@ -57,13 +56,7 @@ abstract class DataManager extends Component {
    * This method should perform the search and store the search result in the database.
    * @param currentSearchState - the currentSearchState that is being used to perform the search (quick and advanced)
    */
-  abstract async performSearch(currentSearchState: SearchState) : Promise<boolean>;
-
-  /**
-   * This method should perform a search, and store all the search results into the database.
-   * @param searchTerms 
-   */
-  abstract async performAllSearch(searchTerms : AdvancedSearchTerms) : Promise<boolean>;
+  abstract performSearch(currentSearchState: SearchState) : Promise<SearchState>;
 
   ////////////////////////
   /*"Implemented" Methods*/

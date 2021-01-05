@@ -3,9 +3,11 @@ import { IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonContent, IonIt
 import Header from '../../components/Header/Header';
 import uuid from 'uuid';
 import ShowMoreLess from '../../components/ShowMoreLess/ShowMoreLess';
-import { PricerInfo } from './Pricer';
+import { CardItem, PricerInfo } from './Pricer';
 import SingleItem from './SupportingComponents/SingleItem';
 import { CardInformation } from '../../dataManagers/DataMangerInterfaces';
+import SearchBar from '../../components/SearchBar/SearchBar';
+import CardHeader from '../../components/Card/CardHeader';
 
 ////////////////////////////////////////////////////////
 /*Enums*/
@@ -23,6 +25,8 @@ enum Ordering {
 
 interface Current_Props {
   state : PricerInfo
+  addCard : (cardToAdd : CardItem) => void
+  removeCard : (cardToRemove : CardItem) => void
 }
 
 ////////////////////////////////////////////////////////
@@ -37,7 +41,7 @@ const PricerDisplay = (props : Current_Props) => {
 
   /*From State Props*/
   const state : PricerInfo = props.state;
-  const cards : CardInformation[] = state.cards;
+  const cards : CardItem[] = state.cards;
   const notes : string[] = state.notes;
 
   /*Settings*/
@@ -47,8 +51,16 @@ const PricerDisplay = (props : Current_Props) => {
   /*Hooks*/
   ////////////////////////
 
+  /*Filter Hooks*/
   const [logsShow, setLogsShow] = useState(Ordering.DATE_ADDED);
   const [filtersShow, setFiltersShow] = useState(false);
+  
+  ////////////////////////
+  /*Functions*/
+  ////////////////////////
+
+  const addCard = props.addCard;
+  const removeCard = props.removeCard;
 
   ////////////////////////
   /*Return*/
@@ -63,6 +75,8 @@ const PricerDisplay = (props : Current_Props) => {
       {/* Displays the History Logs */}
       <IonContent>
 
+        {/*Create SearchBar*/}
+        <SearchBar searchString="" placeholderText="" cardAdderUpdater={addCard}/>
         <IonList>
 
           {/*Filter Card*/}
@@ -103,13 +117,13 @@ const PricerDisplay = (props : Current_Props) => {
           </IonCard>
           
           {/*Displays the Card Items*/}
-          <div>
+          <IonList>
             {
-            cards.map((currentCard : CardInformation) =>
-                <SingleItem cardInfo={currentCard} key={uuid.v4()}/>
+              cards.map((currentCard : CardItem) =>
+                <SingleItem info={currentCard} key={uuid.v4()} removeCardUpdater={removeCard}/>
               )
             }
-          </div>
+          </IonList>
 
         </IonList>
 

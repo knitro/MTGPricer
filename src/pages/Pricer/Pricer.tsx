@@ -31,7 +31,7 @@ export function getEmptyPricerInfo() : PricerInfo {
 /**
  * Sorts with Async and other constantly updating components for the Pricer Screen.
  */
-class ResultsDisplay extends React.Component<{}, PricerInfo> {
+class Pricer extends React.Component<{}, PricerInfo> {
 
   ////////////////////////
   /*Constructor*/
@@ -56,6 +56,17 @@ class ResultsDisplay extends React.Component<{}, PricerInfo> {
     this.setState({notes: await getPricerNotes()});
   }
 
+  addCard = (cardToAdd : CardItem) => {
+    let newArray : CardItem[] = this.state.cards;
+    newArray.push(cardToAdd);
+    this.setState({cards : newArray});
+  }
+
+  removeCard = (cardToRemove : CardItem) => {
+    let newArray : CardItem[] = this.state.cards.filter(currentCard => currentCard === cardToRemove);
+    this.setState({cards: newArray});
+  }
+
   ////////////////////////
   /*Render*/
   ////////////////////////
@@ -64,10 +75,10 @@ class ResultsDisplay extends React.Component<{}, PricerInfo> {
 
     /*Display*/ 
     return (
-      <PricerDisplay state={this.state}/>
+      <PricerDisplay state={this.state} addCard={this.addCard} removeCard={this.removeCard}/>
     );
   }
  
 };
 
-export default ResultsDisplay;
+export default Pricer;

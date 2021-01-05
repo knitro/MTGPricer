@@ -1,10 +1,7 @@
 import DataManager, { DatabaseLoad } from '../DataManager';
-import { SearchState, saveSearchState, saveSearchRequest } from '../../states/SearchState';
+import { emptySearch, SearchState } from '../../states/SearchState';
 import axios from 'axios';
 import { ScryFallInformation, blankScryFallInformation, ScryFallRulings } from './ScryFallInterfaces';
-import { saveSearchHistory } from '../../states/SearchHistoryState';
-import { AdvancedSearchTerms } from '../DataMangerInterfaces';
-import { PriceInformation } from '../../logic/priceChecker/PriceInterfaces';
 
 class ScryFall extends DataManager {
 
@@ -39,7 +36,7 @@ class ScryFall extends DataManager {
     return true
   }
 
-  async performSearch(currentSearch : SearchState) : Promise<boolean> {
+  async performSearch(currentSearch : SearchState) : Promise<SearchState> {
 
     /*Check what type of Search it is*/
 
@@ -54,96 +51,7 @@ class ScryFall extends DataManager {
     }
     //Else Condition ==> Return False as now there is no implemented way of interpreting the data
     else {
-      return false;
-    }
-  }
-
-  async performAllSearch(searchTerms : AdvancedSearchTerms) : Promise<boolean> {
-
-    /*Variable Initialisation*/
-    let compiledSearchTerm : string = "";
-
-    //Add Main Search Term
-    compiledSearchTerm += (searchTerms.mainSearch.toLowerCase());
-
-    //Add Inclusion of Colours
-    if (searchTerms.coloursInclude.length !== 0) {
-      let coloursIncludeString = "+c:";
-      searchTerms.coloursInclude.map((currentColour) => coloursIncludeString += currentColour.toLowerCase());
-      compiledSearchTerm += coloursIncludeString;
-    }
-
-    //Add Exclusion of Colours
-    if (searchTerms.coloursExclude.length !== 0) {
-      // let coloursExcludeString = ;
-      searchTerms.coloursExclude.map((currentColour) => compiledSearchTerm += "+-c:" + currentColour.toLowerCase());
-    }
-    
-
-    //Add Card Types
-    if (searchTerms.cardTypes.length !== 0) {
-      let cardTypesString = "";
-      searchTerms.cardTypes.map((currentType) => cardTypesString += "+t:" + currentType.toLowerCase() + " ");
-      cardTypesString = cardTypesString.trim();
-      compiledSearchTerm += cardTypesString;
-    }
-    
-    //Add Card Text
-    if (searchTerms.cardText.length !== 0) {
-      let cardText = "";
-      searchTerms.cardText.map((currentText) => cardText += "+o:" + currentText.toLowerCase() + " ");
-      cardText = cardText.trim();
-      compiledSearchTerm += cardText;
-    }
-
-    //Get the Final URL
-    let url = this.percentEncode("https://api.scryfall.com/cards/search?order=released&q=" + compiledSearchTerm);
-    console.log(url);
-
-    /*Perform API Call*/
-    try {
-      const axiosResult : ScryFallInformation[] = await axios({
-        url: url,
-        method: 'GET',
-      }).then((response) => {
-          //Grab JSON Data
-          let output : ScryFallInformation[] = response.data.data;
-          return output;
-      }).catch(err => {
-        console.log(err);
-        return [];
-      });
-
-      //Turn the ScryFallInformation[] into a SearchState[]
-      let searchResults: SearchState[] = axiosResult.map((currentSearchState) => {
-        return this.generateSearchState(currentSearchState, [], []);
-      }) 
-
-      //Return Results
-      const returnValue = await saveSearchRequest(searchResults);
-      if (returnValue === true) {
-        if (searchResults.length !== 0) {
-
-          //Save History for Successful Search
-          const currentSearchHistory = {
-            typeOfSearch: "Advanced Search",
-            searchTerm: JSON.stringify(searchTerms),
-            url: url
-          }
-          saveSearchHistory(currentSearchHistory);
-          return true;
-
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
-
-    } catch (err) {
-
-      console.log(err);
-      return false
+      return Object.assign([], emptySearch);
     }
   }
 
@@ -156,7 +64,7 @@ class ScryFall extends DataManager {
    * @param url - the URL of the API call required 
    * @param singleCard - determines whether the resultant search will be an array or a single card. CardName searches should have this set to false, direct api url links should have this set to true.
    */
-  async performSearchURL(url : string) : Promise<boolean> {
+  async performSearchURL(url : string) : Promise<SearchState> {
 
     console.log("Performing URL Search");
 
@@ -186,7 +94,7 @@ class ScryFall extends DataManager {
       });
 
       if (axiosResult === blankScryFallInformation) {
-        return false;
+        return Object.assign([], emptySearch);
       }
 
       const otherPrintings: SearchState[] = await this.getOtherPrintings(axiosResult.prints_search_uri)
@@ -194,29 +102,10 @@ class ScryFall extends DataManager {
       const searchResult : SearchState = await this.generateSearchStateWithRulings(axiosResult, otherPrintings);
       console.log(searchResult);
 
-      const returnValue = await saveSearchState(searchResult);
-      if (returnValue === true) {
-
-        //Save History for Successful Search
-        const currentSearchHistory = {
-          typeOfSearch: "Quick Search",
-          searchTerm: axiosResult.name,
-          url: url
-        }
-        saveSearchHistory(currentSearchHistory);
-        console.log("Search Complete");
-        return true;
-
-      } else {
-        return false;
-      }
-
-    } catch (err) {
-
-      console.log(err);
-      return false
+      return searchResult;
+    } catch {
+      return Object.assign([], emptySearch);
     }
-    
   }
 
   /**

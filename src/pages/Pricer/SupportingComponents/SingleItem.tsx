@@ -1,92 +1,83 @@
-import { IonAlert, IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonLoading, IonText } from '@ionic/react';
+import { IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
+import { CardInformation } from '../../../dataManagers/DataMangerInterfaces';
+import { CardItem } from '../Pricer';
 
 ////////////////////////////////////////////////////////
 /*Props*/
 ////////////////////////////////////////////////////////
 
 interface Current_Props {
-  reading : Reading
+  info    : CardItem
+  removeCardUpdater : (cardToRemove : CardItem) => void
 }
 
 ////////////////////////////////////////////////////////
 /*Component*/
 ////////////////////////////////////////////////////////
 
-/**
- * Displays the 
- */
 const SingleItem = (props : Current_Props) => {
 
-  /*Variable Initialisation*/
-  const currentReading : Reading = props.reading;
-  const locationString : string = capitaliseFirstLetter(currentReading.sensorLocation);
-  const dateString : string = currentReading.timestamp.toDateString();
-  const timeString : string = currentReading.timestamp.toTimeString();
-  const utcString : string = currentReading.timestamp.toUTCString();
-  const motionString : string = (currentReading.motionStatus) ? "Motion Detected" : "No Motion Detected";
-  const colourMotionString : string = (currentReading.motionStatus) ? "success" : "danger";
-  const batteryString : string = "Battery Level : " + currentReading.batteryStatus + "%";
+  ////////////////////////
+  /*Variables*/
+  ////////////////////////
 
-  /*Hook Initialisation*/
+  /*Constant Fields*/
+  const backgroundColourHighlight : string = "secondaryTint"
+  const backgroundColour          : string = "secondaryContrast" 
+
+  /*Retrieve Information from Props*/
+  const info : CardItem = props.info;
+  const removeCardUpdater : (cardToRemove : CardItem) => void = props.removeCardUpdater;
+  const cardInfo  : CardInformation = info.info;
+  const isChecked : boolean = info.isChecked;
+
+  /*Information from CardInformation*/
+  const name      : string = cardInfo.name;
+  const price     : string = cardInfo.price;
+  const priceFoil : string = cardInfo.priceFoil;
+  const imageURL  : string = cardInfo.imageURL;
+  const quantity  : number = cardInfo.quantity;
+  const set       : string = cardInfo.set;
+
+  ////////////////////////
+  /*Hooks*/
+  ////////////////////////
+
+  /*Alert and Loading Display Hooks*/
   const [showLoading, setShowLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
   /*Clean Up UseEffect*/
   useEffect(() => {
-    //Clean up any react states that were set
-    return function cleanup() {
-      setShowLoading(false);
-      setShowAlert(false);
-    }
+
+    console.log("Generated");
+
+    // //Clean up any react states that were set
+    // return function cleanup() {
+    //   setShowLoading(false);
+    //   setShowAlert(false);
+    // }
   }, [])
+
+  ////////////////////////
+  /*Return*/
+  ////////////////////////
 
   return (
     
     <div>
+      <IonItemSliding>
 
-      {/*The IonCard to be Displayed*/}
-      <IonCard onClick= { () => {
-          setShowLoading(true);
-          setShowAlert(true);
-          setShowLoading(false);
-        }}
-        color={colourMotionString}
-      >
-        <IonCardHeader>
-          <IonCardSubtitle>{utcString}</IonCardSubtitle>
-          <IonCardTitle>
-            <RoomIcon roomTitle={props.reading.sensorLocation}/>
-            {" " + locationString}
-          </IonCardTitle>
-        </IonCardHeader>
-      </IonCard>
+        <IonItem>
+          <IonLabel>{name}</IonLabel>
+        </IonItem>
 
-      {/*IonLoading Initialisation*/}
-      <IonLoading
-        cssClass=''
-        isOpen={showLoading}
-        onDidDismiss={() => setShowLoading(false)}
-        message={'Loading History Log Details'}
-        duration={10000}
-      />
-      
-      {/*IonAlert Initialisation*/}
-      <IonAlert
-          isOpen={showAlert}
-          onDidDismiss={() => setShowAlert(false)}
-          cssClass='failed'
-          header={'History Log Details'}
-          subHeader={'Details for Log at ' + locationString}
-          message={ ""
-            + '<b>Date: </b>' + dateString + "<br/>"
-            + '<b>Time:</b> ' + timeString + "<br/>"
-            + '<b>Detected Motion: </b>' + motionString + "<br/>"
-            + '<b>Battery Level: </b>' + batteryString + "<br/>"
-          }
-          buttons={['Dismiss']}
-      />
-
+        <IonItemOptions side="end">
+          <IonItemOption onClick={() => removeCardUpdater(info)}>{"Remove"}</IonItemOption>
+        </IonItemOptions>
+        
+      </IonItemSliding>
     </div>
   );
 }
