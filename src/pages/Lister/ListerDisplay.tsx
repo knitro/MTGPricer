@@ -3,7 +3,7 @@ import { IonButton, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCon
 import Header from '../../components/Header/Header';
 import uuid from 'uuid';
 import ShowMoreLess from '../../components/ShowMoreLess/ShowMoreLess';
-import { CardItem, PricerInfo } from './Pricer';
+import { CardItem, PricerInfo } from './Lister';
 import SingleItem from './SupportingComponents/SingleItem';
 import { CardInformation } from '../../dataManagers/DataMangerInterfaces';
 import SearchBar from '../../components/SearchBar/SearchBar';
@@ -35,7 +35,7 @@ interface Current_Props {
 /*Component*/
 ////////////////////////////////////////////////////////
 
-const PricerDisplay = (props : Current_Props) => {
+const ListerDisplay = (props : Current_Props) => {
 
   ////////////////////////
   /*Variables*/
@@ -141,4 +141,4 @@ const PricerDisplay = (props : Current_Props) => {
   );
 };
 
-export default PricerDisplay;
+export default ListerDisplay;

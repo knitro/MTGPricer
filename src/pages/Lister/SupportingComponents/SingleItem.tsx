@@ -1,7 +1,7 @@
 import { IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonNote, IonText } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import { CardInformation } from '../../../dataManagers/DataMangerInterfaces';
-import { CardItem } from '../Pricer';
+import { CardItem } from '../Lister';
 
 ////////////////////////////////////////////////////////
 /*Props*/
