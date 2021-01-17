@@ -53,7 +53,7 @@ export class StarCityGames extends Pricer {
     
     /*Return*/
     const returnValue : PriceURLs = {
-      nonFoil : foilPriceURL,
+      nonFoil : nonFoilPriceURL,
       foil    : foilPriceURL,
     }
     return returnValue;
@@ -102,7 +102,7 @@ export class StarCityGames extends Pricer {
     cardNameFormatted = cardNameFormatted.split(",").join("");
     
     /*Add the SCG Suffixes*/
-    const setCodeFormatted : string = setCode.toLowerCase() + (isExtended) ? "2" : "";
+    const setCodeFormatted : string = (setCode.toLowerCase()) + ((isExtended) ? "2" : "");
     const collectorNumberFormatted : string = collector_number.toLowerCase();
     const foilingString : string = (isFoil) ? ("enf/") : ("enn/");  
 
