@@ -61,7 +61,7 @@ export function searchCall(cardNameSearchTerm : string,
           released: searchResult.misc.released,
           digital_only: searchResult.misc.digital_only
         },
-        
+        otherPrintingsURL : searchResult.otherPrints,
       }
 
       //Add to Local Storage

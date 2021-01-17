@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IonButton, IonLoading, IonAlert, IonTextarea } from "@ionic/react";
 import { searchCall } from '../../logic/DataManagerCall';
-import { CardItem } from '../../pages/Pricer/Pricer';
+import { CardItem } from '../../pages/Lister/Lister';
 
 ////////////////////////////////////////////////////////
 /*Props*/

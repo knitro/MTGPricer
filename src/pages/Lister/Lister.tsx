@@ -76,7 +76,7 @@ class Lister extends React.Component<{}, PricerInfo> {
   removeCard = (cardToRemove : CardItem) => {
     let newArray : CardItem[] = this.state.cards.filter(currentCard => currentCard !== cardToRemove);
     this.setState({cards: newArray});
-    savePricerCards(this.state.cards);
+    savePricerCards(newArray);
   }
 
   /**

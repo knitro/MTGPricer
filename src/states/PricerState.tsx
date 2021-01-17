@@ -4,7 +4,7 @@
 
 import { Plugins } from '@capacitor/core';
 import { CardInformation } from '../dataManagers/DataMangerInterfaces';
-import { CardItem } from '../pages/Pricer/Pricer';
+import { CardItem } from '../pages/Lister/Lister';
 import uuid from 'uuid';
 
 ////////////////////////////////////////////////////////

@@ -42,7 +42,7 @@ class ScryFall extends DataManager {
 
     //If CardName has content, then create the direct URL and perform the search from it
     if  ("".localeCompare(currentSearch.cardName) !== 0) {
-      let url = this.percentEncode("https://api.scryfall.com/cards/search?order=released&q=" + currentSearch.cardName);
+      let url = this.percentEncode("https://api.scryfall.com/cards/search?q=" + currentSearch.cardName);
       return await this.performSearchURL(url);
     }
     //If the URL has content, then grab the URL and perform a direct search

@@ -1,4 +1,4 @@
-import { IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonNote, IonText } from '@ionic/react';
+import { IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonNote, IonSelect, IonSelectOption, IonText } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import { CardInformation } from '../../../dataManagers/DataMangerInterfaces';
 import { CardItem } from '../Lister';
@@ -34,11 +34,11 @@ const SingleItem = (props : Current_Props) => {
 
   /*Information from CardInformation*/
   const name      : string = cardInfo.name;
-  let price     : string = cardInfo.price;
+  let price       : string = cardInfo.price;
   const priceFoil : string = cardInfo.priceFoil;
   const imageURL  : string = cardInfo.imageURL;
   const quantity  : number = cardInfo.quantity;
-  let set       : string = cardInfo.set;
+  let setCode     : string = cardInfo.set.setCode;
 
   ////////////////////////
   /*Variable Adjustments*/
@@ -50,12 +50,12 @@ const SingleItem = (props : Current_Props) => {
   }
 
   /*Capitalise Set Code*/
-  set = set.toUpperCase();
+  setCode = setCode.toUpperCase();
 
   ////////////////////////
   /*Hooks*/
   ////////////////////////
-
+  
   /*Alert and Loading Display Hooks*/
   const [showLoading, setShowLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -83,7 +83,9 @@ const SingleItem = (props : Current_Props) => {
 
         <IonItem>
           <IonLabel>{name}</IonLabel>
-          <IonText slot="" color="primary">{set}</IonText>
+          <IonSelect value={setCode} placeholder={setCode} onIonChange={(e) => {console.log(e.detail.value)}}>
+            <IonSelectOption value={setCode}>{setCode}</IonSelectOption>
+          </IonSelect>
           <IonText slot="end">{price}</IonText>
           
         </IonItem>

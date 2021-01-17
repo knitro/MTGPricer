@@ -13,6 +13,7 @@ export interface CardInformation {
   quantity  : number,
   set       : SetInformation,
   misc      : MiscInformation,
+  otherPrintingsURL : string,
 }
 
 /**
@@ -49,5 +50,6 @@ export const emptyCardInformation : CardInformation = {
     collector_number: "",
     released        : "",
     digital_only    : false,
-  }
+  },
+  otherPrintingsURL : "",
 }
