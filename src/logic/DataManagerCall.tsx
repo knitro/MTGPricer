@@ -6,7 +6,7 @@ import { updateFunctionDeclaration } from "typescript";
 import DataManager from "../dataManagers/DataManager";
 import { CardInformation, emptyCardInformation } from "../dataManagers/DataMangerInterfaces";
 import ScryFall from "../dataManagers/ScryFall/ScryFall";
-import { CardItem } from "../pages/Pricer/Pricer";
+import { CardItem } from "../pages/Lister/Lister";
 import { addPricerCard } from "../states/PricerState";
 import { emptySearch, SearchState } from "../states/SearchState";
 import uuid from 'uuid';
@@ -49,7 +49,19 @@ export function searchCall(cardNameSearchTerm : string,
         priceFoil : searchResult.prices.scryFallPricing_foil,
         imageURL  : searchResult.imageLink,
         quantity  : 1,
-        set       : searchResult.set.setCode 
+        set       : {
+          setName : searchResult.set.setName,
+          setCode : searchResult.set.setCode,
+          imageLink: searchResult.set.imageLink,
+        },
+        misc: {
+          foil:     searchResult.misc.foil,
+          nonfoil:  searchResult.misc.nonfoil,
+          collector_number: searchResult.misc.collector_number,
+          released: searchResult.misc.released,
+          digital_only: searchResult.misc.digital_only
+        },
+        
       }
 
       //Add to Local Storage

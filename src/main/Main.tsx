@@ -11,7 +11,7 @@ import { IonReactRouter } from '@ionic/react-router';
 /* Page Imports */
 ////////////////////////////////////////////////////////////////////////////////////
 
-import Pricer from '../pages/Pricer/Pricer';
+import Lister from '../pages/Lister/Lister';
 
 ////////////////////////////////////////////////////////////////////////////////////
 /* Component Imports */
@@ -46,7 +46,7 @@ const Main: React.FC = () => {
             <IonRouterOutlet>
 
               {/*Default Pages*/}
-              <Route path="/pricer"       component={Pricer}      exact={true} />
+              <Route path="/pricer"       component={Lister}      exact={true} />
               <Route path="/card-viewer"  component={CardViewer}      exact={true} />
 
               {/*Blank Route*/}

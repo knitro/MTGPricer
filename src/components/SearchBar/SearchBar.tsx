@@ -3,7 +3,7 @@ import { IonSearchbar, IonButton, IonLoading, IonAlert } from "@ionic/react";
 import './SearchBar.css';
 import { emptySearch, SearchState } from '../../states/SearchState';
 import { searchCall } from '../../logic/DataManagerCall';
-import { CardItem } from '../../pages/Pricer/Pricer';
+import { CardItem } from '../../pages/Lister/Lister';
 
 ////////////////////////////////////////////////////////
 /*Props*/
