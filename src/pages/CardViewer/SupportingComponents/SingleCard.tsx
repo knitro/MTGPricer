@@ -1,7 +1,7 @@
 import { IonCard, IonCardContent, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonNote, IonText } from '@ionic/react';
 import React, { useEffect, useState } from 'react';
 import CardHeader from '../../../components/Card/CardHeader';
-import { CardInformation } from '../../../dataManagers/DataMangerInterfaces';
+import { CardInformation, SetInformation } from '../../../dataManagers/DataMangerInterfaces';
 import { CardItem } from '../CardViewer';
 
 ////////////////////////////////////////////////////////
@@ -39,7 +39,8 @@ const SingleCard = (props : Current_Props) => {
   const priceFoil : string = cardInfo.priceFoil;
   const imageURL  : string = cardInfo.imageURL;
   const quantity  : number = cardInfo.quantity;
-  let set       : string = cardInfo.set;
+  let set         : SetInformation = cardInfo.set;
+  let setCode   : string = set.setCode;
 
   ////////////////////////
   /*Variable Adjustments*/
@@ -51,7 +52,7 @@ const SingleCard = (props : Current_Props) => {
   }
 
   /*Capitalise Set Code*/
-  set = set.toUpperCase();
+  setCode = setCode.toUpperCase();
 
   ////////////////////////
   /*Hooks*/
@@ -79,7 +80,7 @@ const SingleCard = (props : Current_Props) => {
 
   return (
     <IonCard>
-      <CardHeader title={name} subtitle={set} inverted={false}/>
+      <CardHeader title={name} subtitle={setCode} inverted={false}/>
       <IonCardContent>
         <img src={imageURL} />
       </IonCardContent>
